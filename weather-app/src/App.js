@@ -18,7 +18,7 @@ function App() {
       {!showContent && (
         <div className="fog-overlay">
           <video autoPlay muted loop preload="auto" className="fog-video">
-            <source src="/fog.mp4" type="video/mp4" />
+            <source src="./assets/fog.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         </div>

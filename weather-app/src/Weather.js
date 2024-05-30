@@ -49,6 +49,25 @@ function Weather() {
     }
   };
 
+  const filterForecastData = (data) => {
+    const filteredData = data.list.filter((item) => {
+      const date = new Date(item.dt * 1000);
+      return date.getHours() === 9; // 9 AM each day
+    });
+
+    // Get the first 5 days at 9 AM
+    const days = {};
+    for (const item of filteredData) {
+      const date = new Date(item.dt * 1000).toISOString().split("T")[0];
+      if (!days[date]) {
+        days[date] = item;
+      }
+      if (Object.keys(days).length === 5) break;
+    }
+
+    return Object.values(days);
+  };
+
   return (
     <Container className="mt-5 weather">
       <h1 className="Weather-title">Witch Weather Forecast</h1>
@@ -99,24 +118,28 @@ function Weather() {
         {forecastType === "5-day" &&
           weatherData &&
           weatherData.list &&
-          weatherData.list
-            .slice(0, 5)
-            .map((item) => (
-              <WeatherCard
-                key={item.dt}
-                dt={item.dt * 1000}
-                temp_min={item.main.temp_min}
-                temp_max={item.main.temp_max}
-                main={item.weather[0].main}
-                icon={item.weather[0].icon}
-              />
-            ))}
+          filterForecastData(weatherData).map((item) => (
+            <WeatherCard
+              key={item.dt}
+              dt={item.dt * 1000}
+              temp_min={item.main.temp_min}
+              temp_max={item.main.temp_max}
+              feels_like={item.main.feels_like}
+              wind={item.wind.speed}
+              humidity={item.main.humidity}
+              main={item.weather[0].main}
+              icon={item.weather[0].icon}
+            />
+          ))}
         {forecastType === "current" && weatherData && (
           <WeatherCard
             key={weatherData.dt}
             dt={weatherData.dt * 1000}
             temp_min={weatherData.main.temp_min}
             temp_max={weatherData.main.temp_max}
+            feels_like={weatherData.main.feels_like}
+            wind={weatherData.wind.speed}
+            humidity={weatherData.main.humidity}
             main={weatherData.weather[0].main}
             icon={weatherData.weather[0].icon}
           />

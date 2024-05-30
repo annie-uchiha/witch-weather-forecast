@@ -2,8 +2,19 @@ import React from "react";
 import { Card } from "react-bootstrap";
 import "./WeatherCard.scss";
 
-const WeatherCard = ({ dt, temp_min, temp_max, main, icon }) => {
+const WeatherCard = ({
+  dt,
+  temp_min,
+  temp_max,
+  feels_like,
+  wind,
+  humidity,
+  main,
+  icon,
+}) => {
   const date = new Date(dt);
+  const formatTemperature = (temp) => `${Math.round(temp)}°C`;
+
   return (
     <Card className="WeatherCardStyle" style={{ width: "18rem" }}>
       <Card.Img
@@ -12,14 +23,14 @@ const WeatherCard = ({ dt, temp_min, temp_max, main, icon }) => {
       />
       <Card.Body>
         <Card.Title>{main}</Card.Title>
-        {/* datetime is received in milliseconds, let's turn into local date time */}
         <p>
           {date.toLocaleDateString()} - {date.toLocaleTimeString()}
         </p>
-        {/* minimum temperature */}
-        <p>Min: {temp_min}</p>
-        {/* maximum temperature */}
-        <p>Max: {temp_max}</p>
+        <p>Min: {formatTemperature(temp_min)}</p>
+        <p>Max: {formatTemperature(temp_max)}</p>
+        <p>Feels Like: {formatTemperature(feels_like)}</p>
+        <p>Wind: {wind} m/s</p>
+        <p>Humidity: {humidity}%</p>
       </Card.Body>
     </Card>
   );

@@ -50,7 +50,7 @@ function Weather() {
   };
 
   return (
-    <Container className="mt-5">
+    <Container className="mt-5 weather">
       <Row className="justify-content-center">
         <Col md={6}>
           <form onSubmit={(e) => handleSubmit(e, forecastType)}>

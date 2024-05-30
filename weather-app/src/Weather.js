@@ -58,7 +58,7 @@ function Weather() {
               <div className="form-group">
                 <input
                   type="text"
-                  className="form-control"
+                  className="form-control city-input"
                   placeholder="Enter location"
                   value={location}
                   onChange={handleLocationChange}

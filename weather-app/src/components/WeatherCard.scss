@@ -1,5 +1,13 @@
 .WeatherCardStyle {
-  background-color: rgb(88, 145, 135);
+  background: -webkit-gradient(
+    linear,
+    left bottom,
+    left top,
+    from(rgb(88, 145, 135)),
+    to(rgb(175, 223, 175))
+  );
+  background: -o-linear-gradient(bottom, rgb(88, 145, 135), rgb(175, 223, 175));
+  background: linear-gradient(to top, rgb(88, 145, 135), rgb(175, 223, 175));
   margin-bottom: 120px;
   font-size: 1rem;
   font-weight: 700;

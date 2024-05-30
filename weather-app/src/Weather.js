@@ -1,29 +1,25 @@
 import React, { useState } from "react";
 import axios from "axios";
-import Card from "react-bootstrap/Card";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import DropdownButton from "react-bootstrap/DropdownButton";
-import Dropdown from "react-bootstrap/Dropdown";
-import Button from "react-bootstrap/Button";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import config from "./config";
+import WeatherCard from "./components/WeatherCard";
 import "./Weather.scss";
 
 function Weather() {
   const [location, setLocation] = useState("");
   const [weatherData, setWeatherData] = useState(null);
-  const [forecastType, setForecastType] = useState("5-day forecast");
+  const [forecastType, setForecastType] = useState(null);
   const API_KEY = config.apiKey;
 
-  const fetchWeatherData = async () => {
+  const fetchWeatherData = async (type) => {
     try {
-      const response = await axios.get(
-        `https://api.openweathermap.org/data/2.5/${
-          forecastType === "current weather" ? "weather" : "forecast"
-        }?q=${location}&appid=${API_KEY}`
-      );
+      const endpoint =
+        type === "current"
+          ? `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${API_KEY}&units=metric`
+          : `https://api.openweathermap.org/data/2.5/forecast?q=${location}&appid=${API_KEY}&units=metric`;
+      const response = await axios.get(endpoint);
       setWeatherData(response.data);
+      setForecastType(type);
     } catch (error) {
       console.error("Error fetching weather data:", error);
     }
@@ -33,13 +29,9 @@ function Weather() {
     setLocation(e.target.value);
   };
 
-  const handleForecastTypeChange = (type) => {
-    setForecastType(type);
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = (e, type) => {
     e.preventDefault();
-    fetchWeatherData();
+    fetchWeatherData(type);
   };
 
   const handleDownload = () => {
@@ -61,7 +53,7 @@ function Weather() {
     <Container className="mt-5">
       <Row className="justify-content-center">
         <Col md={6}>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={(e) => handleSubmit(e, forecastType)}>
             <div className="d-flex justify-content-between">
               <div className="form-group">
                 <input
@@ -72,21 +64,20 @@ function Weather() {
                   onChange={handleLocationChange}
                 />
               </div>
-              <DropdownButton id="dropdown-basic-button" title={forecastType}>
-                <Dropdown.Item
-                  onClick={() => handleForecastTypeChange("current weather")}
-                >
-                  Current Weather
-                </Dropdown.Item>
-                <Dropdown.Item
-                  onClick={() => handleForecastTypeChange("5-day forecast")}
-                >
-                  5-day Forecast
-                </Dropdown.Item>
-              </DropdownButton>
-              <button type="submit" className="btn btn-primary">
-                Get Weather Forecast
-              </button>
+              <Button
+                type="button"
+                className="btn btn-primary"
+                onClick={(e) => handleSubmit(e, "current")}
+              >
+                Current Weather
+              </Button>
+              <Button
+                type="button"
+                className="btn btn-secondary"
+                onClick={(e) => handleSubmit(e, "5-day")}
+              >
+                5-day Forecast
+              </Button>
             </div>
           </form>
         </Col>
@@ -102,23 +93,33 @@ function Weather() {
           </Button>
         </Col>
       </Row>
-      <Row className="justify-content-center mt-3">
-        {weatherData &&
-          weatherData.list.map((item) => (
-            <Col key={item.dt} md={4} className="mb-3">
-              <Card>
-                <Card.Body>
-                  <Card.Title>{item.dt_txt}</Card.Title>
-                  <Card.Text>
-                    Temperature: {item.main.temp} °C
-                    <br />
-                    Description: {item.weather[0].description}
-                  </Card.Text>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
-      </Row>
+      <div className="weather-cards-container">
+        {forecastType === "5-day" &&
+          weatherData &&
+          weatherData.list &&
+          weatherData.list
+            .slice(0, 5)
+            .map((item) => (
+              <WeatherCard
+                key={item.dt}
+                dt={item.dt * 1000}
+                temp_min={item.main.temp_min}
+                temp_max={item.main.temp_max}
+                main={item.weather[0].main}
+                icon={item.weather[0].icon}
+              />
+            ))}
+        {forecastType === "current" && weatherData && (
+          <WeatherCard
+            key={weatherData.dt}
+            dt={weatherData.dt * 1000}
+            temp_min={weatherData.main.temp_min}
+            temp_max={weatherData.main.temp_max}
+            main={weatherData.weather[0].main}
+            icon={weatherData.weather[0].icon}
+          />
+        )}
+      </div>
     </Container>
   );
 }

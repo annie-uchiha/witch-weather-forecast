@@ -10,7 +10,7 @@
   background: linear-gradient(to top, rgb(88, 145, 135), rgb(175, 223, 175));
   margin-bottom: 120px;
   font-size: 1.2rem;
-  color: rgb(244, 247, 244);
+  color: rgb(255, 255, 255);
   font-weight: 700;
   border-radius: 10px;
   position: relative;
@@ -18,7 +18,7 @@
   width: 300px;
 
   &.sunny {
-    background: url("../assets/sunny-weather.gif") no-repeat center center;
+    background: url("../assets/sunnysunsun.gif") no-repeat center center;
     background-size: cover;
   }
 

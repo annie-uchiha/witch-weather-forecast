@@ -12,4 +12,36 @@
   font-size: 1rem;
   font-weight: 700;
   border-radius: 10px;
+  position: relative;
+  overflow: hidden; 
+  width: 300px;
+
+  &.sunny {
+    background: url("../assets/sunny-weather.gif") no-repeat center center;
+    background-size: cover;
+  }
+
+  &.rainy {
+    background: url("../assets/rain.gif") no-repeat center center;
+    background-size: cover;
+  }
+
+  .clouds-animation {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    background: url("../assets/clouds.gif") repeat-x;
+    animation: cloudsMove 3000 linear ease-out;
+  }
+
+  @keyframes cloudsMove {
+    from {
+      left: -100%;
+    }
+    to {
+      left: 100%;
+    }
+  }
 }

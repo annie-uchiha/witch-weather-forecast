@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
 import "./WeatherCard.scss";
 
@@ -14,9 +14,35 @@ const WeatherCard = ({
 }) => {
   const date = new Date(dt);
   const formatTemperature = (temp) => `${Math.round(temp)}°C`;
+  const [showClouds, setShowClouds] = useState(false);
+
+  useEffect(() => {
+    if (main.toLowerCase() === "clouds") {
+      setShowClouds(true);
+      const timer = setTimeout(() => {
+        setShowClouds(false);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [main]);
+
+  const getWeatherClass = (weather) => {
+    switch (weather.toLowerCase()) {
+      case "clear":
+        return "sunny";
+      case "rain":
+      case "drizzle":
+      case "thunderstorm":
+        return "rainy";
+      case "clouds":
+      default:
+        return "";
+    }
+  };
 
   return (
-    <Card className="WeatherCardStyle" style={{ width: "18rem" }}>
+    <Card className={`WeatherCardStyle ${getWeatherClass(main)}`}>
+      {showClouds && <div className="clouds-animation" />}
       <Card.Img
         variant="top"
         src={`http://openweathermap.org/img/wn/${icon}@2x.png`}

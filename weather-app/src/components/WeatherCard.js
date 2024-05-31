@@ -11,22 +11,24 @@ const WeatherCard = ({
   humidity,
   main,
   icon,
+  isCurrent,
 }) => {
   const date = new Date(dt);
   const formatTemperature = (temp) => `${Math.round(temp)}°C`;
   const [showClouds, setShowClouds] = useState(false);
 
   useEffect(() => {
-    if (main.toLowerCase() === "clouds") {
+    if (isCurrent && main.toLowerCase() === "clouds") {
       setShowClouds(true);
       const timer = setTimeout(() => {
         setShowClouds(false);
       }, 3000);
       return () => clearTimeout(timer);
     }
-  }, [main]);
+  }, [main, isCurrent]);
 
   const getWeatherClass = (weather) => {
+    if (!isCurrent) return "";
     switch (weather.toLowerCase()) {
       case "clear":
         return "sunny";
@@ -42,7 +44,7 @@ const WeatherCard = ({
 
   return (
     <Card className={`WeatherCardStyle ${getWeatherClass(main)}`}>
-      {showClouds && <div className="clouds-animation" />}
+      {isCurrent && showClouds && <div className="clouds-animation" />}
       <Card.Img
         variant="top"
         src={`http://openweathermap.org/img/wn/${icon}@2x.png`}

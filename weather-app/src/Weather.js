@@ -129,6 +129,7 @@ function Weather() {
               humidity={item.main.humidity}
               main={item.weather[0].main}
               icon={item.weather[0].icon}
+              isCurrent={false}
             />
           ))}
         {forecastType === "current" && weatherData && (
@@ -142,6 +143,7 @@ function Weather() {
             humidity={weatherData.main.humidity}
             main={weatherData.weather[0].main}
             icon={weatherData.weather[0].icon}
+            isCurrent={true}
           />
         )}
       </div>

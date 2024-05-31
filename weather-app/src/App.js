@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Weather from "./Weather";
+import Header from "./Header";
 import "./App.css";
 
 function App() {
@@ -23,9 +24,7 @@ function App() {
           </video>
         </div>
       )}
-      <header className="App-header">
-        <h1>Witches Weather Forecast</h1>
-      </header>
+      <Header />
       {showContent && <Weather />}
     </div>
   );

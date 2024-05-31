@@ -52,10 +52,9 @@ function Weather() {
   const filterForecastData = (data) => {
     const filteredData = data.list.filter((item) => {
       const date = new Date(item.dt * 1000);
-      return date.getHours() === 9; // 9 AM each day
+      return date.getHours() === 9;
     });
 
-    // Get the first 5 days at 9 AM
     const days = {};
     for (const item of filteredData) {
       const date = new Date(item.dt * 1000).toISOString().split("T")[0];

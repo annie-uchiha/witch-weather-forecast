@@ -9,11 +9,12 @@
   background: -o-linear-gradient(bottom, rgb(88, 145, 135), rgb(175, 223, 175));
   background: linear-gradient(to top, rgb(88, 145, 135), rgb(175, 223, 175));
   margin-bottom: 120px;
-  font-size: 1rem;
+  font-size: 1.2rem;
+  color: rgb(244, 247, 244);
   font-weight: 700;
   border-radius: 10px;
   position: relative;
-  overflow: hidden; 
+  overflow: hidden;
   width: 300px;
 
   &.sunny {

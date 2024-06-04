@@ -18,13 +18,17 @@
   width: 300px;
 
   &.sunny {
-    background: url("../assets/sunnysunsun.gif") no-repeat center center;
+    background: url("../assets/sunny.gif") no-repeat center center;
     background-size: cover;
   }
 
   &.rainy {
     background: url("../assets/rain.gif") no-repeat center center;
     background-size: cover;
+  }
+
+  .fetched-data {
+    background-color: rgba(88, 145, 135, 0.705);
   }
 
   .clouds-animation {

@@ -51,14 +51,16 @@ const WeatherCard = ({
       />
       <Card.Body>
         <Card.Title>{main}</Card.Title>
-        <p>
+        <p className="fetched-data">
           {date.toLocaleDateString()} - {date.toLocaleTimeString()}
         </p>
-        <p>Min: {formatTemperature(temp_min)}</p>
-        <p>Max: {formatTemperature(temp_max)}</p>
-        <p>Feels Like: {formatTemperature(feels_like)}</p>
-        <p>Wind: {wind} m/s</p>
-        <p>Humidity: {humidity}%</p>
+        <p className="fetched-data">Min: {formatTemperature(temp_min)}</p>
+        <p className="fetched-data">Max: {formatTemperature(temp_max)}</p>
+        <p className="fetched-data">
+          Feels Like: {formatTemperature(feels_like)}
+        </p>
+        <p className="fetched-data">Wind: {wind} m/s</p>
+        <p className="fetched-data">Humidity: {humidity}%</p>
       </Card.Body>
     </Card>
   );

@@ -1,6 +1,6 @@
 # witch-weather-forecast
 
-This is the third individual project. Practice: React.js, JSX, work with API
+This is the third individual project. Practice: React.js, JSX, work with API, AXIOS
 
 Beetroot Academy Front-end development course
 

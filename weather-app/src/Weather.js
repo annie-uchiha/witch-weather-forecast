@@ -36,12 +36,38 @@ function Weather() {
 
   const handleDownload = () => {
     if (weatherData) {
-      const json = JSON.stringify(weatherData);
-      const blob = new Blob([json], { type: "application/json" });
+      let text = "";
+
+      if (forecastType === "current") {
+        text += `Current Weather for ${location}\n`;
+        text += `Date: ${new Date(weatherData.dt * 1000).toLocaleString()}\n`;
+        text += `Temperature: ${weatherData.main.temp} °C\n`;
+        text += `Feels Like: ${weatherData.main.feels_like} °C\n`;
+        text += `Min Temperature: ${weatherData.main.temp_min} °C\n`;
+        text += `Max Temperature: ${weatherData.main.temp_max} °C\n`;
+        text += `Humidity: ${weatherData.main.humidity}%\n`;
+        text += `Wind Speed: ${weatherData.wind.speed} m/s\n`;
+        text += `Weather: ${weatherData.weather[0].main}\n`;
+      } else if (forecastType === "5-day") {
+        const filteredData = filterForecastData(weatherData);
+        text += `5-Day Weather Forecast for ${location}\n`;
+        filteredData.forEach((item) => {
+          text += `\nDate: ${new Date(item.dt * 1000).toLocaleString()}\n`;
+          text += `Temperature: ${item.main.temp} °C\n`;
+          text += `Feels Like: ${item.main.feels_like} °C\n`;
+          text += `Min Temperature: ${item.main.temp_min} °C\n`;
+          text += `Max Temperature: ${item.main.temp_max} °C\n`;
+          text += `Humidity: ${item.main.humidity}%\n`;
+          text += `Wind Speed: ${item.wind.speed} m/s\n`;
+          text += `Weather: ${item.weather[0].main}\n`;
+        });
+      }
+
+      const blob = new Blob([text], { type: "text/plain" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = "weather_forecast.json";
+      a.download = "weather_forecast.txt";
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);

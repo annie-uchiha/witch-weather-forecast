@@ -7,7 +7,7 @@ const Header = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setStartAnimation(true);
-    }, 10000);
+    }, 6000);
 
     return () => clearTimeout(timer);
   }, []);

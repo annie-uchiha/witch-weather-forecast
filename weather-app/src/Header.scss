@@ -20,20 +20,20 @@
   height: auto;
   opacity: 1;
   transform: translateY(13px);
-  animation: runCat 9000ms linear 1 forwards;
+  animation: runCat 6000ms linear 1 forwards;
 }
 
 @keyframes runCat {
   0% {
-    transform: translateX(-2500px);
-    opacity: 100;
+    transform: translateX(-100vw);
+    opacity: 0;
   }
   80% {
-    transform: translateX(1000px);
+    transform: translateX(50vw);
     opacity: 100;
   }
   100% {
-    transform: translateX(1800px);
+    transform: translateX(80vw);
     opacity: 0;
   }
 }

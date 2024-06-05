@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/witch-weather-forecast/static/css/main.61da9ab3.css",
+    "main.js": "/witch-weather-forecast/static/js/main.f163cfa8.js",
+    "static/media/k6fjo5ie1tna1.jpg": "/witch-weather-forecast/static/media/k6fjo5ie1tna1.e9cb42731889622d0fd5.jpg",
+    "static/media/clouds.gif": "/witch-weather-forecast/static/media/clouds.db4e4b3bfdca1b2dcb0b.gif",
+    "static/media/sunny.gif": "/witch-weather-forecast/static/media/sunny.482682bde900f9cefbce.gif",
+    "static/media/rainy.gif": "/witch-weather-forecast/static/media/rainy.cd0a671293e3bc2001b9.gif",
+    "index.html": "/witch-weather-forecast/index.html",
+    "main.61da9ab3.css.map": "/witch-weather-forecast/static/css/main.61da9ab3.css.map",
+    "main.f163cfa8.js.map": "/witch-weather-forecast/static/js/main.f163cfa8.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.61da9ab3.css",
+    "static/js/main.f163cfa8.js"
+  ]
+}

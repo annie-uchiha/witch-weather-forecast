@@ -51,15 +51,19 @@ function Weather() {
       } else if (forecastType === "5-day") {
         const filteredData = filterForecastData(weatherData);
         text += `5-Day Weather Forecast for ${location}\n`;
-        filteredData.forEach((item) => {
-          text += `\nDate: ${new Date(item.dt * 1000).toLocaleString()}\n`;
-          text += `Temperature: ${item.main.temp} °C\n`;
-          text += `Feels Like: ${item.main.feels_like} °C\n`;
-          text += `Min Temperature: ${item.main.temp_min} °C\n`;
-          text += `Max Temperature: ${item.main.temp_max} °C\n`;
-          text += `Humidity: ${item.main.humidity}%\n`;
-          text += `Wind Speed: ${item.wind.speed} m/s\n`;
-          text += `Weather: ${item.weather[0].main}\n`;
+        filteredData.forEach((day) => {
+          text += `\nDate: ${new Date(day[0].dt * 1000).toLocaleString()}\n`;
+          day.forEach((item, index) => {
+            const timeLabels = ["9am", "12pm", "3pm"];
+            text += `\n${timeLabels[index]}:\n`;
+            text += `Temperature: ${item.main.temp} °C\n`;
+            text += `Feels Like: ${item.main.feels_like} °C\n`;
+            text += `Min Temperature: ${item.main.temp_min} °C\n`;
+            text += `Max Temperature: ${item.main.temp_max} °C\n`;
+            text += `Humidity: ${item.main.humidity}%\n`;
+            text += `Wind Speed: ${item.wind.speed} m/s\n`;
+            text += `Weather: ${item.weather[0].main}\n`;
+          });
         });
       }
 
@@ -76,18 +80,21 @@ function Weather() {
   };
 
   const filterForecastData = (data) => {
+    const hours = [9, 12, 15]; // Specify the hours to filter
     const filteredData = data.list.filter((item) => {
       const date = new Date(item.dt * 1000);
-      return date.getHours() === 9;
+      return hours.includes(date.getHours());
     });
 
     const days = {};
     for (const item of filteredData) {
       const date = new Date(item.dt * 1000).toISOString().split("T")[0];
       if (!days[date]) {
-        days[date] = item;
+        days[date] = [];
       }
-      if (Object.keys(days).length === 5) break;
+      if (days[date].length < 3) {
+        days[date].push(item);
+      }
     }
 
     return Object.values(days);
@@ -143,24 +150,21 @@ function Weather() {
         {forecastType === "5-day" &&
           weatherData &&
           weatherData.list &&
-          filterForecastData(weatherData).map((item) => (
+          filterForecastData(weatherData).map((day, index) => (
             <WeatherCard
-              key={item.dt}
-              dt={item.dt * 1000}
-              temp_min={item.main.temp_min}
-              temp_max={item.main.temp_max}
-              feels_like={item.main.feels_like}
-              wind={item.wind.speed}
-              humidity={item.main.humidity}
-              main={item.weather[0].main}
-              icon={item.weather[0].icon}
-              isCurrent={false}
+              key={index}
+              date={day[0].dt * 1000}
+              times={[
+                { time: "9am", data: day[0] },
+                { time: "12pm", data: day[1] },
+                { time: "3pm", data: day[2] },
+              ]}
             />
           ))}
         {forecastType === "current" && weatherData && (
           <WeatherCard
             key={weatherData.dt}
-            dt={weatherData.dt * 1000}
+            date={weatherData.dt * 1000}
             temp_min={weatherData.main.temp_min}
             temp_max={weatherData.main.temp_max}
             feels_like={weatherData.main.feels_like}

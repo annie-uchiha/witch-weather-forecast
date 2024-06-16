@@ -16,12 +16,16 @@ function App() {
     return () => clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+    document.body.className = isDay ? "day" : "night";
+  }, [isDay]);
+
   const toggleTheme = () => {
     setIsDay(!isDay);
   };
 
   return (
-    <div className={`App ${isDay ? "day" : "night"}`}>
+    <div className="App">
       {!showContent && (
         <div className="fog-overlay">
           <video autoPlay muted loop preload="auto" className="fog-video">

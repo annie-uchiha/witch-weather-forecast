@@ -1,6 +1,21 @@
 .App {
   text-align: center;
   position: relative;
+  transition: background-image 0.5s ease-in-out;
+}
+
+.App.night {
+  background-color: rgb(2, 15, 13);
+  background-image: url("../public/assets/k6fjo5ie1tna1.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.App.day {
+  background-color: rgb(255, 223, 186);
+  background-image: url("../public/assets/day-background.jpg"); 
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .fog-overlay {
@@ -46,4 +61,14 @@
 .weather {
   margin: 0;
   padding: 0;
+}
+
+.toggle-icon {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  font-size: 2rem;
+  cursor: pointer;
+  color: white;
+  z-index: 99999;
 }

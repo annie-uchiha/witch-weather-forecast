@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Weather from "./Weather";
 import Header from "./Header";
+import { FaSun, FaMoon } from "react-icons/fa";
 import "./App.css";
 
 function App() {
   const [showContent, setShowContent] = useState(false);
+  const [isDay, setIsDay] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -14,8 +16,12 @@ function App() {
     return () => clearTimeout(timer);
   }, []);
 
+  const toggleTheme = () => {
+    setIsDay(!isDay);
+  };
+
   return (
-    <div className="App">
+    <div className={`App ${isDay ? "day" : "night"}`}>
       {!showContent && (
         <div className="fog-overlay">
           <video autoPlay muted loop preload="auto" className="fog-video">
@@ -24,6 +30,9 @@ function App() {
           </video>
         </div>
       )}
+      <div className="toggle-icon" onClick={toggleTheme}>
+        {isDay ? <FaMoon /> : <FaSun />}
+      </div>
       <Header />
       {showContent && <Weather />}
     </div>

@@ -12,7 +12,7 @@
 }
 
 .App.day {
-  background-color: rgb(255, 223, 186);
+  background-color: rgba(218, 154, 82, 0.945);
   background-image: url("../public/assets/day-background.jpg"); 
   background-size: cover;
   background-repeat: no-repeat;
